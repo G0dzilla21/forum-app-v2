@@ -12,8 +12,8 @@ const userSchema = new mongoose.Schema({
     avatar: String,          // Avatar URL
     website: String,         // Website URL
     socialNetworks: {
-        facebook: String,    // Social Network URLs (e.g., Facebook)
-        twitter: String,     // You can add more fields as needed
+        facebook: String,    
+        twitter: String,     
         linkedin: String,
         instagram: String,
     },

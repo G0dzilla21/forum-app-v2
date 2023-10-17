@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserApi from '../api/UserApi';
-
+import defaultAvatar from '../assets/default-avatar.jpg';
 
 const EditProfile = () => {
   const [userData, setUserData] = useState({
@@ -24,6 +24,32 @@ const EditProfile = () => {
     aboutMe: '',
   });
 
+  const commonTimezones = [
+    'Etc/UTC',
+    'America/New_York',
+    'America/Los_Angeles',
+    'America/Chicago',
+    'America/Denver',
+    'America/Toronto',
+    'America/Vancouver',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Berlin',
+    'Asia/Tokyo',
+    'Asia/Shanghai',
+    'Asia/Dubai',
+    'Asia/Singapore',
+    'Australia/Sydney',
+    'Australia/Melbourne',
+    'Africa/Cairo',
+    'Africa/Johannesburg',
+    'America/Mexico_City',
+    'America/Buenos_Aires',
+    'Pacific/Honolulu',
+    'Pacific/Auckland',
+    'Asia/Kolkata',
+    'Etc/GMT',
+  ];  
   const [passwordChange, setPasswordChange] = useState({
     currentPassword: '',
     newPassword: '',
@@ -44,16 +70,16 @@ const EditProfile = () => {
     setUserData({ ...userData, avatar: file });
   };
 
-  const handleSocialNetworkChange = (e) => {
-    const { name, value } = e.target;
-    setUserData({
-      ...userData,
-      socialNetworks: {
-        ...userData.socialNetworks,
-        [name]: value,
-      },
-    });
-  };
+  // const handleSocialNetworkChange = (name, e) => {
+  //   const { value } = e.target;
+  //   setUserData({
+  //     ...userData,
+  //     socialNetworks: {
+  //       ...userData.socialNetworks,
+  //       [name]: value,
+  //     },
+  //   });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,33 +87,14 @@ const EditProfile = () => {
   };
   
   useEffect(() => {
-    // Fetch the user's profile data when the component mounts
+    // Fetch the user profile when the component mounts
     UserApi.getUserProfile()
-      .then((response) => {
-        // Update the state with the retrieved user data
-        setUserData({
-          displayName: response.data.displayName,
-          nickname: response.data.nickname,
-          email: response.data.email,
-          title: response.data.title,
-          userGroup: response.data.userGroup,
-          avatar: null, // Update with the actual avatar data
-          website: response.data.website,
-          socialNetworks: {
-            facebook: response.data.socialNetworks.facebook,
-            twitter: response.data.socialNetworks.twitter,
-            linkedin: response.data.socialNetworks.linkedin,
-            instagram: response.data.socialNetworks.instagram,
-          },
-          location: response.data.location,
-          timezone: response.data.timezone,
-          occupation: response.data.occupation,
-          signature: response.data.signature,
-          aboutMe: response.data.aboutMe,
-        });
+      .then((data) => {
+        setUserData(data);
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        // Handle errors, e.g., show an error message
+        console.error('Error fetching user profile:', error);
       });
   }, []);
 
@@ -96,25 +103,24 @@ const EditProfile = () => {
   return (
     <div>
       <h2>Edit Profile</h2>
+      {userData.avatar ? (
+        <div>
+          <img
+            src={URL.createObjectURL(userData.avatar)} // Display the selected image
+            alt="User Avatar"
+            style={{ width: '300px', height: '300px' }}
+          />
+        </div>
+      ) : (
+        <div>
+          <img
+            src={defaultAvatar} // Display the default avatar
+            alt="Default Avatar"
+            style={{ width: '300px', height: '300px' }}
+          />
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
-      <div>
-        <label>Current Password:</label>
-        <input
-        type="password"
-        name="currentPassword"
-        value={passwordChange.currentPassword}
-        onChange={handlePasswordChange}
-      />
-      </div>
-      <div>
-        <label>New Password:</label>
-        <input
-            type="password"
-            name="newPassword"
-            value={passwordChange.newPassword}
-            onChange={handlePasswordChange}
-        />
-      </div>
         <div>
           <label>Display Name:</label>
           <input
@@ -173,7 +179,7 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        {/* <div>
           <label>Facebook:</label>
           <input
             type="url"
@@ -208,7 +214,7 @@ const EditProfile = () => {
             value={userData.socialNetworks.instagram}
             onChange={(e) => handleSocialNetworkChange('instagram', e)}
           />
-        </div>
+        </div> */}
         <div>
           <label>Location:</label>
           <input
@@ -220,12 +226,18 @@ const EditProfile = () => {
         </div>
         <div>
           <label>Timezone:</label>
-          <input
-            type="text"
+          <select
             name="timezone"
             value={userData.timezone}
             onChange={handleInputChange}
-          />
+          >
+            <option value="">Select Timezone</option>
+            {commonTimezones.map((tz) => (
+              <option key={tz} value={tz}>
+                {tz}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label>Occupation:</label>
@@ -253,6 +265,24 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
+        {/* <div>
+          <label>Current Password:</label>
+          <input
+            type="password"
+            name="currentPassword"
+            value={passwordChange.currentPassword}
+            onChange={handlePasswordChange}
+          />
+        </div>
+        <div>
+          <label>New Password:</label>
+          <input
+            type="password"
+            name="newPassword"
+            value={passwordChange.newPassword}
+            onChange={handlePasswordChange}
+          />
+        </div> */}
         <button type="submit">Save</button>
       </form>
     </div>

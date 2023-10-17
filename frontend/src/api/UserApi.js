@@ -59,7 +59,28 @@ const UserApi = {
         console.error('Error updating profile:', error);
         alert('An error occurred while updating your profile.');
       }
+    },
+    getUserProfile: async () => {
+      try {
+        let token = sessionStorage.getItem('token');
+        
+        if (!token) {
+          throw new Error('Token not found in session storage');
+        }
+        
+        const response = await axios.get('http://localhost:5000/api/getProfile', {
+          headers: {
+            Authorization: `Bearer ${token}` // Replace with your JWT token
+          }
+        });
+        return response.data; // Assuming the response contains user profile data
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        throw error;
+      }
     }
+
+
   };
 
 

@@ -15,6 +15,9 @@ router.post('/login', UserController.getUserByUsername);
 //Update profile
 router.post('/updateProfile', authMiddleware.verifyToken, UserController.updateUserProfile);
 
+//Get profile
+router.get('/getProfile', authMiddleware.verifyToken, UserController.getUserProfile);
+
 // Sample protected route
 router.get('/protected', authMiddleware.verifyToken, (req, res) => {
     res.json({ message: 'You have access to this route!' });
