@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link , useNavigate} from 'react-router-dom';
 import LoginModal from './LoginModal';
 import '../css/styles.css'; // Import your CSS file
+import defaultAvatar from '../assets/default-avatar.jpg';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [showLoginForm, setShowLoginForm] = useState(false);
