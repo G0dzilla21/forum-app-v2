@@ -35,18 +35,21 @@ const UserApi = {
 
     updateProfile: async (profileData) => {
       try {
-        const token = sessionStorage.getItem('token'); // Get the token from session storage
+        let token = sessionStorage.getItem('token');
+        
         if (!token) {
-          throw new Error('Token not found');
+          throw new Error('Token not found in session storage');
         }
         
-        const response = await axios.post(`http://localhost:5000/api/updateProfile`, profileData, {
+        // Log the token to verify it
+        console.log(token);
+    
+        const response = await axios.post('http://localhost:5000/api/updateProfile', profileData, {
           headers: {
-            'Authorization': `Bearer ${token}`, // Attach the token to the request headers
-            
+            'Authorization': `Bearer ${token}`
           },
         });
-  
+    
         if (response.status === 200) {
           alert('Profile updated successfully!');
         } else {
@@ -56,7 +59,7 @@ const UserApi = {
         console.error('Error updating profile:', error);
         alert('An error occurred while updating your profile.');
       }
-    },
+    }
   };
 
 

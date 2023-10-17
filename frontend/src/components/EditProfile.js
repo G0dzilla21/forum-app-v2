@@ -24,6 +24,16 @@ const EditProfile = () => {
     aboutMe: '',
   });
 
+  const [passwordChange, setPasswordChange] = useState({
+    currentPassword: '',
+    newPassword: '',
+  });
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordChange({ ...passwordChange, [name]: value });
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -36,7 +46,6 @@ const EditProfile = () => {
 
   const handleSocialNetworkChange = (e) => {
     const { name, value } = e.target;
-    // Assuming you have a 'socialNetworks' object in your state
     setUserData({
       ...userData,
       socialNetworks: {
@@ -50,6 +59,37 @@ const EditProfile = () => {
     e.preventDefault();
     UserApi.updateProfile(userData);
   };
+  
+  useEffect(() => {
+    // Fetch the user's profile data when the component mounts
+    UserApi.getUserProfile()
+      .then((response) => {
+        // Update the state with the retrieved user data
+        setUserData({
+          displayName: response.data.displayName,
+          nickname: response.data.nickname,
+          email: response.data.email,
+          title: response.data.title,
+          userGroup: response.data.userGroup,
+          avatar: null, // Update with the actual avatar data
+          website: response.data.website,
+          socialNetworks: {
+            facebook: response.data.socialNetworks.facebook,
+            twitter: response.data.socialNetworks.twitter,
+            linkedin: response.data.socialNetworks.linkedin,
+            instagram: response.data.socialNetworks.instagram,
+          },
+          location: response.data.location,
+          timezone: response.data.timezone,
+          occupation: response.data.occupation,
+          signature: response.data.signature,
+          aboutMe: response.data.aboutMe,
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []);
 
 
 
@@ -57,6 +97,24 @@ const EditProfile = () => {
     <div>
       <h2>Edit Profile</h2>
       <form onSubmit={handleSubmit}>
+      <div>
+        <label>Current Password:</label>
+        <input
+        type="password"
+        name="currentPassword"
+        value={passwordChange.currentPassword}
+        onChange={handlePasswordChange}
+      />
+      </div>
+      <div>
+        <label>New Password:</label>
+        <input
+            type="password"
+            name="newPassword"
+            value={passwordChange.newPassword}
+            onChange={handlePasswordChange}
+        />
+      </div>
         <div>
           <label>Display Name:</label>
           <input
