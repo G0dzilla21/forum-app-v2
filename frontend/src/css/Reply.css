@@ -49,3 +49,8 @@
     border-color: rgb(76,175,80); /* Change border color on focus */
   }
 
+  .edit-delete-buttons {
+    display: flex;
+    gap: 8px; /* Adjust the gap to create space between buttons */
+  }
+

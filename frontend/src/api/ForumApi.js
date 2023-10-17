@@ -101,6 +101,50 @@ export const ForumApi = {
         } catch (error) {
             console.error("Error in creating replies: ", error);
         }
+    },
+    // Function to edit a reply
+    editReply: async (replyId, content) => {
+        try {
+            const token = sessionStorage.getItem('token');
+            const response = await axios.put(
+                forumURI + `/api/reply/${replyId}`,
+                { content },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            if (response) {
+                console.log(response);
+                return response.data;
+            }
+        } catch (error) {
+            console.error('Error editing reply:', error);
+            throw error;
+        }
+    },
+
+    // Function to delete a reply
+    deleteReply: async (replyId) => {
+        try {
+            const token = sessionStorage.getItem('token');
+            const response = await axios.delete(forumURI + `/api/reply/${replyId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response) {
+                console.log(response);
+                return response.data;
+            }
+        } catch (error) {
+            console.error('Error deleting reply:', error);
+            throw error;
+        }
     }
 
     
