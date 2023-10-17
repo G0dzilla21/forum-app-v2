@@ -30,6 +30,30 @@ export const ForumApi = {
             throw error;
         }
     },
+  
+    editDiscussion: async (discussionId, data) => {
+      try {
+        const token = sessionStorage.getItem("token"); // Retrieve the token from local storage
+
+        const response = await axios.put(
+          forumURI + `/api/discussion/${discussionId}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include the Authorization header with the token
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response) {
+          return response.data;
+        }
+      } catch (error) {
+        console.error("Error editing discussion:", error);
+        throw error;
+      }
+    },
     
     getCategories: async (setCategories, setIsLoading) => {
         try {

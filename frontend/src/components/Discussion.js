@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ForumApi } from '../api/ForumApi';
-import DiscussionForm from './DiscussionForm';
-import '../css/Discussion.css';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ForumApi } from "../api/ForumApi";
+import DiscussionForm from "./DiscussionForm";
+import "../css/Discussion.css";
 
 export const Discussion = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get('id');
-  const category = queryParams.get('name');
+  const id = queryParams.get("id");
+  const category = queryParams.get("name");
   const [discussions, setDiscussions] = useState([]);
   const [editingDiscussion, setEditingDiscussion] = useState(null);
   const isLoggedIn = sessionStorage.length > 0; // Check if the user is logged in
@@ -28,7 +28,7 @@ export const Discussion = () => {
     try {
       if (editingDiscussion) {
         // Edit existing discussion
-        await ForumApi.editDiscussion(id, editingDiscussion._id, data);
+        await ForumApi.editDiscussion(editingDiscussion._id, data);
       } else {
         // Create a new discussion
         await ForumApi.createDiscussion(id, data);
@@ -38,14 +38,14 @@ export const Discussion = () => {
       setEditingDiscussion(null);
       setSentDiscussion(true);
     } catch (error) {
-      console.error('Error in submitting form:', error);
+      console.error("Error in submitting form:", error);
     }
   };
 
   useEffect(() => {
     // Fetch discussions when the component mounts or when a new discussion is created/edited
     ForumApi.getDiscussionByCategory(id, setDiscussions);
-    
+
     // Check if a new discussion has been created/edited
     if (sentDiscussion) {
       // Reset the flag and trigger a re-fetch
@@ -60,12 +60,17 @@ export const Discussion = () => {
 
       {/* Display a link to create a new thread */}
       {isLoggedIn && (
-        <button onClick={() => navigate(`/forum/new-thread?id=${id}`)}>Create New Thread</button>
+        <button onClick={() => navigate(`/forum/new-thread?id=${id}`)}>
+          Create New Thread
+        </button>
       )}
 
       {/* Display the form for creating/editing */}
       {editingDiscussion && (
-        <DiscussionForm onSubmit={handleFormSubmit} discussion={editingDiscussion} />
+        <DiscussionForm
+          onSubmit={handleFormSubmit}
+          discussion={editingDiscussion}
+        />
       )}
 
       <div className="discussion-table-container">
