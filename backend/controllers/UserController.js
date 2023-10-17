@@ -70,7 +70,9 @@ const UserController = {
           timezone,
           occupation,
           signature,
-          aboutMe
+          aboutMe,
+          currentPassword, // Add the current password field
+          newPassword,     // Add the new password field
         } = req.body;
     
         // Get the JWT token from the request headers
@@ -79,7 +81,7 @@ const UserController = {
         if (!token) {
           return res.status(403).json({ error: 'Token not provided' });
         }
-        
+    
         // Verify the token
         jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
           if (err) {
@@ -96,6 +98,19 @@ const UserController = {
             return res.status(404).json({ error: 'User not found' });
           }
     
+          // // Check if the user entered the correct current password
+          // const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+          // if (!passwordMatch) {
+          //   return res.status(401).json({ error: 'Incorrect current password' });
+          // }
+    
+          // // If the user is changing the password, hash and save the new password
+          // if (newPassword) {
+          //   const salt = await bcrypt.genSalt(10);
+          //   const hashedPassword = await bcrypt.hash(newPassword, salt);
+          //   user.password = hashedPassword;
+          // }
+    
           // Update the user's profile fields
           user.displayName = displayName;
           user.nickname = nickname;
@@ -111,13 +126,6 @@ const UserController = {
           user.signature = signature;
           user.aboutMe = aboutMe;
     
-          // If the user is changing the password, hash and save the new password
-          if (password) {
-            const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(password, salt);
-            user.password = hashedPassword;
-          }
-    
           // Save the updated user object
           await user.save();
     
@@ -127,7 +135,44 @@ const UserController = {
         console.error('Error updating profile:', error);
         res.status(500).json({ error: 'Profile update failed' });
       }
+    },
+  
+
+    getUserProfile: async (req, res) => {
+      try {
+        // Get the JWT token from the request headers
+        let token = req.headers.authorization;
+        token = token.split(' ')[1];
+        console.log(token);
+        if (!token) {
+          return res.status(403).json({ error: 'Token not provided' });
+        }
+        
+        // Verify and decode the token
+        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+          if (err) {
+            return res.status(403).json({ error: 'Invalid token' });
+          }
+    
+          // Extract the user ID from the decoded token
+          const userId = decoded.userId;
+          
+          // Now you have the user's ID, and you can use it to fetch the user's profile
+          const user = await User.findById(userId);
+    
+          if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+          }
+    
+          res.json(user);
+        });
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).json({ error: 'Error fetching user profile' });
+      }
     }
-  }
+
+    
+}
 
 module.exports = UserController;

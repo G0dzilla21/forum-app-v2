@@ -12,17 +12,20 @@ const EditProfile = () => {
     avatar: null,
     website: '',
     socialNetworks: {
-      facebook: '',
-      twitter: '',
-      linkedin: '',
-      instagram: '',
+      facebook: '', 
+      twitter: '',  
+      linkedin: '', 
+      instagram: '', 
     },
     location: '',
     timezone: '',
     occupation: '',
     signature: '',
-    aboutMe: '',
+    aboutMe: ''
   });
+
+  const [password, setPassword] = useState('');
+  // const history = useHistory();
 
   const [passwordChange, setPasswordChange] = useState({
     currentPassword: '',
@@ -44,8 +47,8 @@ const EditProfile = () => {
     setUserData({ ...userData, avatar: file });
   };
 
-  const handleSocialNetworkChange = (e) => {
-    const { name, value } = e.target;
+  const handleSocialNetworkChange = (name, e) => {
+    const { value } = e.target;
     setUserData({
       ...userData,
       socialNetworks: {
@@ -61,33 +64,14 @@ const EditProfile = () => {
   };
   
   useEffect(() => {
-    // Fetch the user's profile data when the component mounts
+    // Fetch the user profile when the component mounts
     UserApi.getUserProfile()
-      .then((response) => {
-        // Update the state with the retrieved user data
-        setUserData({
-          displayName: response.data.displayName,
-          nickname: response.data.nickname,
-          email: response.data.email,
-          title: response.data.title,
-          userGroup: response.data.userGroup,
-          avatar: null, // Update with the actual avatar data
-          website: response.data.website,
-          socialNetworks: {
-            facebook: response.data.socialNetworks.facebook,
-            twitter: response.data.socialNetworks.twitter,
-            linkedin: response.data.socialNetworks.linkedin,
-            instagram: response.data.socialNetworks.instagram,
-          },
-          location: response.data.location,
-          timezone: response.data.timezone,
-          occupation: response.data.occupation,
-          signature: response.data.signature,
-          aboutMe: response.data.aboutMe,
-        });
+      .then((data) => {
+        setUserData(data);
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        // Handle errors, e.g., show an error message
+        console.error('Error fetching user profile:', error);
       });
   }, []);
 
@@ -97,24 +81,7 @@ const EditProfile = () => {
     <div>
       <h2>Edit Profile</h2>
       <form onSubmit={handleSubmit}>
-      <div>
-        <label>Current Password:</label>
-        <input
-        type="password"
-        name="currentPassword"
-        value={passwordChange.currentPassword}
-        onChange={handlePasswordChange}
-      />
-      </div>
-      <div>
-        <label>New Password:</label>
-        <input
-            type="password"
-            name="newPassword"
-            value={passwordChange.newPassword}
-            onChange={handlePasswordChange}
-        />
-      </div>
+      
         <div>
           <label>Display Name:</label>
           <input
@@ -173,7 +140,7 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        {/* <div>
           <label>Facebook:</label>
           <input
             type="url"
@@ -208,7 +175,7 @@ const EditProfile = () => {
             value={userData.socialNetworks.instagram}
             onChange={(e) => handleSocialNetworkChange('instagram', e)}
           />
-        </div>
+        </div> */}
         <div>
           <label>Location:</label>
           <input
@@ -253,6 +220,24 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
+        {/* <div>
+          <label>Current Password:</label>
+          <input
+            type="password"
+            name="currentPassword"
+            value={passwordChange.currentPassword}
+            onChange={handlePasswordChange}
+          />
+        </div>
+        <div>
+          <label>New Password:</label>
+          <input
+            type="password"
+            name="newPassword"
+            value={passwordChange.newPassword}
+            onChange={handlePasswordChange}
+          />
+        </div> */}
         <button type="submit">Save</button>
       </form>
     </div>
