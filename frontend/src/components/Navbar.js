@@ -18,6 +18,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const handleLogout = () => {
     sessionStorage.clear();
     setIsLoggedIn(false);
+    navigate('/');
   };
 
   const handleDropdownToggle = () => {

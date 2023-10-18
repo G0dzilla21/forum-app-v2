@@ -12,7 +12,7 @@ router.put('/category/:id', CategoryController.updateCategoryById);
 router.delete('/category/:id', CategoryController.deleteCategoryById);
 
 router.get('/discussion', DiscussionController.getDiscussions);
-router.get('/discussion/category/:categoryId', authMiddleware.verifyToken, DiscussionController.getDiscussionsByCategory);
+router.get('/discussion/category/:categoryId', DiscussionController.getDiscussionsByCategory);
 router.post('/discussion/category/:categoryId', authMiddleware.verifyToken, DiscussionController.createDiscussion);
 router.get('/discussion/:id', DiscussionController.getDiscussionById);
 router.post('/discussion', DiscussionController.createDiscussion);
