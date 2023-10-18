@@ -3,12 +3,12 @@ import UserApi from '../api/UserApi';
 import defaultAvatar from '../assets/default-avatar.jpg';
 
 const avatarImages = [
-  '/assets/avatar1.jpg',
-  '/assets/avatar2.jpg',
-  '/assets/avatar3.jpg',
-  '/assets/avatar4.jpg',
-  '/assets/avatar5.jpg',
-  '/assets/avatar6.jpg',
+  'avatar1.jpg',
+  'avatar2.jpg',
+  'avatar3.jpg',
+  'avatar4.jpg',
+  'avatar5.jpg',
+  'avatar6.jpg',
 ];
 
 
@@ -21,12 +21,10 @@ const EditProfile = () => {
     userGroup: '',
     avatar: '',
     website: '',
-    socialNetworks: {
-      facebook: '',
-      twitter: '',
-      linkedin: '',
-      instagram: '',
-    },
+    facebook: '',
+    twitter: '',
+    linkedin: '',
+    instagram: '',
     location: '',
     timezone: '',
     occupation: '',
@@ -77,19 +75,13 @@ const EditProfile = () => {
   };
 
   const handleAvatarChange = (e) => {
-    const selectedAvatar = e.target.value;
-    setUserData({ ...userData, avatar: selectedAvatar });
+    const selectedAvatarIndex = parseInt(e.target.value, 10);
+    if (!isNaN(selectedAvatarIndex) && selectedAvatarIndex >= 0 && selectedAvatarIndex < avatarImages.length) {
+      const selectedAvatar = avatarImages[selectedAvatarIndex];
+      const s3Url = `https://forum-app-bucket.s3.us-east-2.amazonaws.com/${selectedAvatar}`;
+      setUserData({ ...userData, avatar: s3Url });
+    }
   };
-  // const handleSocialNetworkChange = (name, e) => {
-  //   const { value } = e.target;
-  //   setUserData({
-  //     ...userData,
-  //     socialNetworks: {
-  //       ...userData.socialNetworks,
-  //       [name]: value,
-  //     },
-  //   });
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -116,7 +108,7 @@ const EditProfile = () => {
       {userData.avatar ? (
         <div>
           <img
-            src={URL.createObjectURL(userData.avatar)} // Display the selected image
+            src={userData.avatar} // Use the avatar URL directly
             alt="User Avatar"
             style={{ width: '300px', height: '300px' }}
           />
@@ -176,7 +168,7 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        {/* <div>
+        <div>
           <label>Choose Avatar:</label>
           <div>
             {avatarImages.map((avatar, index) => (
@@ -184,15 +176,15 @@ const EditProfile = () => {
                 <input
                   type="radio"
                   name="avatar"
-                  value={avatar}
-                  checked={userData.avatar === avatar}
+                  value={index} 
+                  checked={userData.avatar === `https://forum-app-bucket.s3.us-east-2.amazonaws.com/${avatar}`}
                   onChange={handleAvatarChange}
                 />
-                <img src={avatar} alt={`Avatar ${index + 1}`} />
+                <img src={`https://forum-app-bucket.s3.us-east-2.amazonaws.com/${avatar}`} alt={`Avatar ${index + 1}`} style={{ width: '50px', height: '50px' }} />
               </label>
             ))}
           </div>
-        </div> */}
+        </div>
         <div>
           <label>Website:</label>
           <input
@@ -202,13 +194,13 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        {/* <div>
+        <div>
           <label>Facebook:</label>
           <input
             type="url"
             name="facebook"
-            value={userData.socialNetworks.facebook}
-            onChange={(e) => handleSocialNetworkChange('facebook', e)}
+            value={userData.facebook}
+            onChange={handleInputChange}
           />
         </div>
         <div>
@@ -216,8 +208,8 @@ const EditProfile = () => {
           <input
             type="url"
             name="twitter"
-            value={userData.socialNetworks.twitter}
-            onChange={(e) => handleSocialNetworkChange('twitter', e)}
+            value={userData.twitter}
+            onChange={handleInputChange}
           />
         </div>
         <div>
@@ -225,8 +217,8 @@ const EditProfile = () => {
           <input
             type="url"
             name="linkedin"
-            value={userData.socialNetworks.linkedin}
-            onChange={(e) => handleSocialNetworkChange('linkedin', e)}
+            value={userData.linkedin}
+            onChange={handleInputChange}
           />
         </div>
         <div>
@@ -234,10 +226,10 @@ const EditProfile = () => {
           <input
             type="url"
             name="instagram"
-            value={userData.socialNetworks.instagram}
-            onChange={(e) => handleSocialNetworkChange('instagram', e)}
+            value={userData.instagram}
+            onChange={handleInputChange}
           />
-        </div> */}
+        </div>
         <div>
           <label>Location:</label>
           <input

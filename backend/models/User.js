@@ -11,12 +11,10 @@ const userSchema = new mongoose.Schema({
     userGroup: String,       // User Group
     avatar: String,          // Avatar URL
     website: String,         // Website URL
-    socialNetworks: {
-        facebook: String,    
-        twitter: String,     
-        linkedin: String,
-        instagram: String,
-    },
+    facebook: String,    
+    twitter: String,     
+    linkedin: String,
+    instagram: String,
     location: String,        // Location
     timezone: String,        // Timezone
     occupation: String,      // Occupation

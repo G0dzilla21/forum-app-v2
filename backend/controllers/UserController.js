@@ -65,7 +65,10 @@ const UserController = {
           userGroup,
           avatar,
           website,
-          socialNetworks,
+          facebook,    
+          twitter,     
+          linkedin,
+          instagram,
           location,
           timezone,
           occupation,
@@ -97,10 +100,12 @@ const UserController = {
           if (!user) {
             return res.status(404).json({ error: 'User not found' });
           }    
-
-          const passwordMatch = await bcrypt.compare(currentPassword, user.password);
-          if (!passwordMatch) {
-            return res.status(401).json({ error: 'Incorrect current password' });
+          
+          if (currentPassword) {
+            const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!passwordMatch) {
+              return res.status(401).json({ error: 'Incorrect current password' });
+            }
           }
 
           if (newPassword) {
@@ -115,13 +120,15 @@ const UserController = {
           user.userGroup = userGroup;
           user.avatar = avatar;
           user.website = website;
-          user.socialNetworks = socialNetworks;
+          user.facebook = facebook;
+          user.twitter = twitter;
+          user.linkedin = linkedin;
+          user.instagram = instagram;
           user.location = location;
           user.timezone = timezone;
           user.occupation = occupation;
           user.signature = signature;
           user.aboutMe = aboutMe;
-          // user.password = newPassword;
     
           await user.save();
     
