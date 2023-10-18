@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import UserApi from '../api/UserApi';
 import defaultAvatar from '../assets/default-avatar.jpg';
 
+const avatarImages = [
+  '/assets/avatar1.jpg',
+  '/assets/avatar2.jpg',
+  '/assets/avatar3.jpg',
+  '/assets/avatar4.jpg',
+  '/assets/avatar5.jpg',
+  '/assets/avatar6.jpg',
+];
+
+
 const EditProfile = () => {
   const [userData, setUserData] = useState({
     displayName: '',
@@ -9,7 +19,7 @@ const EditProfile = () => {
     email: '',
     title: '',
     userGroup: '',
-    avatar: null,
+    avatar: '',
     website: '',
     socialNetworks: {
       facebook: '',
@@ -50,6 +60,7 @@ const EditProfile = () => {
     'Asia/Kolkata',
     'Etc/GMT',
   ];  
+
   const [passwordChange, setPasswordChange] = useState({
     currentPassword: '',
     newPassword: '',
@@ -65,11 +76,10 @@ const EditProfile = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    setUserData({ ...userData, avatar: file });
+  const handleAvatarChange = (e) => {
+    const selectedAvatar = e.target.value;
+    setUserData({ ...userData, avatar: selectedAvatar });
   };
-
   // const handleSocialNetworkChange = (name, e) => {
   //   const { value } = e.target;
   //   setUserData({
@@ -83,7 +93,7 @@ const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    UserApi.updateProfile(userData);
+    UserApi.updateProfile({ ...userData, ...passwordChange });
   };
   
   useEffect(() => {
@@ -166,10 +176,23 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label>Change Avatar:</label>
-          <input type="file" accept="image/*" onChange={handlePhotoChange} />
-        </div>
+        {/* <div>
+          <label>Choose Avatar:</label>
+          <div>
+            {avatarImages.map((avatar, index) => (
+              <label key={index}>
+                <input
+                  type="radio"
+                  name="avatar"
+                  value={avatar}
+                  checked={userData.avatar === avatar}
+                  onChange={handleAvatarChange}
+                />
+                <img src={avatar} alt={`Avatar ${index + 1}`} />
+              </label>
+            ))}
+          </div>
+        </div> */}
         <div>
           <label>Website:</label>
           <input
@@ -265,7 +288,7 @@ const EditProfile = () => {
             onChange={handleInputChange}
           />
         </div>
-        {/* <div>
+        <div>
           <label>Current Password:</label>
           <input
             type="password"
@@ -282,7 +305,7 @@ const EditProfile = () => {
             value={passwordChange.newPassword}
             onChange={handlePasswordChange}
           />
-        </div> */}
+        </div>
         <button type="submit">Save</button>
       </form>
     </div>
