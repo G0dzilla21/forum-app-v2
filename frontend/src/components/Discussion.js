@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "./Discussion.css";
 import { ForumApi } from "../api/ForumApi";
+import jwtDecode from "jwt-decode";
 import DiscussionForm from "./DiscussionForm";
 import "../css/Discussion.css";
 
@@ -14,6 +16,9 @@ export const Discussion = () => {
   const [editingDiscussion, setEditingDiscussion] = useState(null);
   const isLoggedIn = sessionStorage.length > 0; // Check if the user is logged in
   const [sentDiscussion, setSentDiscussion] = useState(false);
+  const userToken = sessionStorage.getItem("token");
+  const decodedToken = jwtDecode(userToken);
+  const userId = decodedToken.userId;
 
   const handleClick = (discussionId) => {
     navigate(`/forum/category/discussion?id=${discussionId}`);
@@ -54,6 +59,13 @@ export const Discussion = () => {
     }
   }, [id, sentDiscussion]);
 
+  const isAuthor = (reply) => {
+    const currentUser = sessionStorage.getItem("token")
+      ? jwtDecode(sessionStorage.getItem("token"))
+      : null;
+    return currentUser && currentUser.userId === reply.author;
+  };
+
   return (
     <div>
       <h1>Welcome to {category}</h1>
@@ -84,23 +96,34 @@ export const Discussion = () => {
             </tr>
           </thead>
           <tbody>
-            {discussions.map((discussion) => (
-              <tr key={discussion._id}>
-                <td onClick={() => handleClick(discussion._id)}>
-                  {/* Wrap the title content in a clickable element */}
-                  <div>
-                    <p>{discussion.title}</p>
-                    <p>Created by</p>
-                  </div>
-                </td>
-                <td>{discussion.content}</td>
-                <td>{discussion.createdAt}</td>
-                <td>
-                  {/* Add buttons for actions, like edit */}
-                  <button onClick={() => handleEdit(discussion)}>Edit</button>
-                </td>
-              </tr>
-            ))}
+            {discussions.map((discussion) => {
+              console.log("This is userId: ", userId);
+              console.log("This is author: ", discussion.author);
+              console.log("This is discussion title: ", discussion.title);
+              return (
+                <tr key={discussion._id}>
+                  <td onClick={() => handleClick(discussion._id)}>
+                    {/* Wrap the title content in a clickable element */}
+                    <div>
+                      <p>{discussion.title}</p>
+                      <p>Created by</p>
+                    </div>
+                  </td>
+                  <td>{discussion.content}</td>
+                  <td>{discussion.createdAt}</td>
+
+                  <td>
+                    <button
+                      onClick={() => handleEdit(discussion)}
+                      disabled={discussion.author !== userId}
+                      className={discussion.author !== userId ? "disabled" : ""}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

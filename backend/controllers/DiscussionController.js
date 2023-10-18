@@ -1,20 +1,19 @@
-const Discussion = require('../models/Discussion');
-const mongoose = require('mongoose');
+const Discussion = require("../models/Discussion");
+const mongoose = require("mongoose");
 
 const DiscussionController = {
-
   // Get all discussions
   getDiscussions: async (req, res) => {
     try {
-      const discussions = await Discussion.find(); 
+      const discussions = await Discussion.find();
       if (discussions && discussions.length > 0) {
         res.status(200).json(discussions);
       } else {
-        res.status(404).json({ message: 'No discussions found' });
+        res.status(404).json({ message: "No discussions found" });
       }
     } catch (error) {
-      console.error('Error in getting discussions:', error);
-      res.status(500).json({ error: 'Error in getting discussions' });
+      console.error("Error in getting discussions:", error);
+      res.status(500).json({ error: "Error in getting discussions" });
     }
   },
 
@@ -26,11 +25,11 @@ const DiscussionController = {
       if (discussion) {
         res.status(200).json(discussion);
       } else {
-        res.status(404).json({ message: 'Discussion not found' });
+        res.status(404).json({ message: "Discussion not found" });
       }
     } catch (error) {
-      console.error('Error in getting discussion by ID:', error);
-      res.status(500).json({ error: 'Error in getting discussion' });
+      console.error("Error in getting discussion by ID:", error);
+      res.status(500).json({ error: "Error in getting discussion" });
     }
   },
 
@@ -38,53 +37,59 @@ const DiscussionController = {
   getDiscussionsByCategory: async (req, res) => {
     try {
       const categoryId = req.params.categoryId; // Correctly access categoryId from params
-      
+
       // Create a new ObjectId instance from categoryId
-      const categoryIdObjectId = mongoose.Types.ObjectId.createFromHexString(categoryId);
-  
-      const discussions = await Discussion.find({ category: categoryIdObjectId }); // Use the ObjectId for querying
-  
+      const categoryIdObjectId =
+        mongoose.Types.ObjectId.createFromHexString(categoryId);
+
+      const discussions = await Discussion.find({
+        category: categoryIdObjectId,
+      }); // Use the ObjectId for querying
+
       if (discussions && discussions.length > 0) {
         res.status(200).json(discussions);
       } else {
-        res.status(404).json({ message: 'No discussions found for this category' });
+        res
+          .status(404)
+          .json({ message: "No discussions found for this category" });
       }
     } catch (error) {
-      console.error('Error in getting discussions by category:', error);
-      res.status(500).json({ error: 'Error in getting discussions by category' });
+      console.error("Error in getting discussions by category:", error);
+      res
+        .status(500)
+        .json({ error: "Error in getting discussions by category" });
     }
   },
-  
-
 
   createDiscussion: async (req, res) => {
     try {
       // Extract necessary data from the request
       const { title, content } = req.body;
-  
+
       // Check if the user is authenticated
       if (!req.user) {
-        return res.status(401).json({ error: 'User not authenticated' });
+        return res.status(401).json({ error: "User not authenticated" });
       }
-  
+
       // Get the user ID from the authenticated user
-      const author = req.user._id;
-  
+      const author = req.user.userId;
+      console.log("Request: ", req);
+      console.log("This is the Author", author);
       // Get the category ID from the request parameters
       const category = req.params.categoryId;
-  
+
       // Create a new discussion instance
       const discussion = new Discussion({ title, content, author, category });
-  
+
       // Save the discussion to the database
       await discussion.save();
-  
+
       // Return the created discussion in the response
-      res.status(201).json({ message: 'Discussion created!', discussion });
+      res.status(201).json({ message: "Discussion created!", discussion });
     } catch (error) {
       // Handle errors
-      console.error('Error in creating discussion:', error);
-      res.status(500).json({ error: 'Error in creating discussion' });
+      console.error("Error in creating discussion:", error);
+      res.status(500).json({ error: "Error in creating discussion" });
     }
   },
 
@@ -97,13 +102,13 @@ const DiscussionController = {
         { new: true }
       );
       if (discussion) {
-        res.status(200).json({ message: 'Discussion updated!', discussion });
+        res.status(200).json({ message: "Discussion updated!", discussion });
       } else {
-        res.status(404).json({ message: 'Discussion not found' });
+        res.status(404).json({ message: "Discussion not found" });
       }
     } catch (error) {
-      console.error('Error in updating discussion by ID:', error);
-      res.status(500).json({ error: 'Error in updating discussion' });
+      console.error("Error in updating discussion by ID:", error);
+      res.status(500).json({ error: "Error in updating discussion" });
     }
   },
 
@@ -112,13 +117,13 @@ const DiscussionController = {
     try {
       const discussion = await Discussion.findByIdAndRemove(req.params.id);
       if (discussion) {
-        res.status(200).json({ message: 'Discussion deleted!', discussion });
+        res.status(200).json({ message: "Discussion deleted!", discussion });
       } else {
-        res.status(404).json({ message: 'Discussion not found' });
+        res.status(404).json({ message: "Discussion not found" });
       }
     } catch (error) {
-      console.error('Error in deleting discussion by ID:', error);
-      res.status(500).json({ error: 'Error in deleting discussion' });
+      console.error("Error in deleting discussion by ID:", error);
+      res.status(500).json({ error: "Error in deleting discussion" });
     }
   },
 };
