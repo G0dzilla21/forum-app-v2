@@ -109,16 +109,17 @@ export const Discussion = () => {
           </thead>
           <tbody>
             {discussions.map((discussion) => {
-              console.log("This is userId: ", userId);
-              console.log("This is author: ", discussion.author);
-              console.log("This is discussion title: ", discussion.title);
               return (
                 <tr key={discussion._id}>
                   <td onClick={() => handleClick(discussion._id)}>
                     {/* Wrap the title content in a clickable element */}
                     <div>
                       <p>{discussion.title}</p>
-                      <p>Created by</p>
+                      <div>
+                        <p>
+                          Created by: <span>{discussion.author?.username}</span>
+                        </p>
+                      </div>
                     </div>
                   </td>
                   <td>{discussion.content}</td>
@@ -127,16 +128,18 @@ export const Discussion = () => {
                   <td>
                     <button
                       onClick={() => handleEdit(discussion)}
-                      disabled={discussion.author !== userId}
-                      className={discussion.author !== userId ? "disabled" : ""}
+                      disabled={discussion.author?._id !== userId}
+                      className={
+                        discussion.author?._id !== userId ? "disabled" : ""
+                      }
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(discussion._id)}
-                      disabled={discussion.author !== userId}
+                      disabled={discussion.author?._id !== userId}
                       className={
-                        discussion.author !== userId
+                        discussion.author?._id !== userId
                           ? "disabled"
                           : "delete-post-button"
                       }
