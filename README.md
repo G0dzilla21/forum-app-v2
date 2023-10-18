@@ -27,6 +27,6 @@ In a separate terminal, follow these steps:
 2. Install any dependencies
 `npm i`
 3. Start the backend server
-`node index.js`
+`npm start`
 
 From here, the setup process should now be complete! Happy testing!
