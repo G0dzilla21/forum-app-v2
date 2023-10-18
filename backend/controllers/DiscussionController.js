@@ -44,7 +44,11 @@ const DiscussionController = {
 
       const discussions = await Discussion.find({
         category: categoryIdObjectId,
-      }); // Use the ObjectId for querying
+      }).populate({
+        path: "author",
+        select: "username",
+      });
+      // Use the ObjectId for querying
 
       if (discussions && discussions.length > 0) {
         res.status(200).json(discussions);
