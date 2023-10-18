@@ -27,6 +27,18 @@ export const Discussion = () => {
   const handleEdit = (discussion) => {
     setEditingDiscussion(discussion);
   };
+  const handleDelete = async (discussionId) => {
+    try {
+      await ForumApi.deleteDiscussion(discussionId);
+
+      // After successfully deleting the discussion, remove it from the state
+      setDiscussions((prevDiscussions) =>
+        prevDiscussions.filter((discussion) => discussion._id !== discussionId)
+      );
+    } catch (error) {
+      console.error("Error deleting discussion:", error);
+    }
+  };
 
   const handleFormSubmit = async (data) => {
     // Logic to submit the form data to the API (create or edit)
@@ -119,6 +131,17 @@ export const Discussion = () => {
                       className={discussion.author !== userId ? "disabled" : ""}
                     >
                       Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(discussion._id)}
+                      disabled={discussion.author !== userId}
+                      className={
+                        discussion.author !== userId
+                          ? "disabled"
+                          : "delete-post-button"
+                      }
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>

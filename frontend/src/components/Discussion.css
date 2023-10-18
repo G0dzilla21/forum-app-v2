@@ -1,4 +1,14 @@
 button.disabled {
   background-color: rgb(128, 128, 128, 0.5);
   color: rgb(128, 128, 128);
+  margin-left: 3px;
+}
+.delete-post-button {
+  background-color: rgb(255, 0, 0, 0.9);
+  color: white;
+  margin-left: 3px;
+  transition: background-color 0.2s ease-in-out;
+}
+.delete-post-button:hover {
+  background-color: rgb(255, 0, 0, 0.7);
 }
