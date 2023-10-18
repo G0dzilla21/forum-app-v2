@@ -71,8 +71,8 @@ const UserController = {
           occupation,
           signature,
           aboutMe,
-          currentPassword, // Add the current password field
-          newPassword,     // Add the new password field
+          currentPassword, 
+          newPassword,     
         } = req.body;
     
         // Get the JWT token from the request headers
@@ -96,21 +96,17 @@ const UserController = {
     
           if (!user) {
             return res.status(404).json({ error: 'User not found' });
+          }    
+
+          const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+          if (!passwordMatch) {
+            return res.status(401).json({ error: 'Incorrect current password' });
           }
-    
-          // // Check if the user entered the correct current password
-          // const passwordMatch = await bcrypt.compare(currentPassword, user.password);
-          // if (!passwordMatch) {
-          //   return res.status(401).json({ error: 'Incorrect current password' });
-          // }
-    
-          // // If the user is changing the password, hash and save the new password
-          // if (newPassword) {
-          //   const salt = await bcrypt.genSalt(10);
-          //   const hashedPassword = await bcrypt.hash(newPassword, salt);
-          //   user.password = hashedPassword;
-          // }
-    
+
+          if (newPassword) {
+            user.password = newPassword;
+          }
+
           // Update the user's profile fields
           user.displayName = displayName;
           user.nickname = nickname;
@@ -125,15 +121,15 @@ const UserController = {
           user.occupation = occupation;
           user.signature = signature;
           user.aboutMe = aboutMe;
+          // user.password = newPassword;
     
-          // Save the updated user object
           await user.save();
     
           res.json({ message: 'Profile updated successfully' });
         });
       } catch (error) {
         console.error('Error updating profile:', error);
-        res.status(500).json({ error: 'Profile update failed' });
+        res.status(500).json({ error: 'An error occurred while updating your profile' });
       }
     },
   
