@@ -1,17 +1,30 @@
-// NewestUsers.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const NewestUsers = () => {
-  // Assuming you have an array of newest users
-  const newestUsers = ['User1', 'User2', 'User3'];
+  const [newestUsers, setNewestUsers] = useState([]);
+
+  useEffect(() => {
+    // Fetch newest users from your API
+    const fetchNewestUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/dashboard-overview');
+        setNewestUsers(response.data.recentUsers);
+      } catch (error) {
+        console.error('Error fetching newest users:', error.message);
+      }
+    };
+
+    fetchNewestUsers();
+  }, []);
 
   return (
     <div className="widget">
       <h3>Newest Users</h3>
       <ul>
-        {newestUsers.map((user, index) => (
-          <li key={index}>{user}</li>
-        ))}
+      {newestUsers.map((user, index) => (
+        <li key={user._id}>{user.username}</li>
+      ))}
       </ul>
     </div>
   );

@@ -4,6 +4,7 @@ const DiscussionController = require("../controllers/DiscussionController");
 const ReplyController = require("../controllers/ReplyController");
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
+const DashboardController = require("../controllers/DashboardController");
 
 router.get('/category', CategoryController.getCategories);
 // router.get('/category/:id', CategoryController.getCategoryById);
@@ -25,5 +26,7 @@ router.get('/reply/discussion/:discussionId', ReplyController.getRepliesByDiscus
 router.post('/reply', ReplyController.createReply);
 router.put('/reply/:id', ReplyController.updateReplyById);
 router.delete('/reply/:id', ReplyController.deleteReplyById);
+
+router.get('/dashboard-overview', DashboardController.getOverview);
 
 module.exports = router;

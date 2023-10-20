@@ -130,6 +130,13 @@ const DiscussionController = {
       res.status(500).json({ error: "Error in deleting discussion" });
     }
   },
+  getRecentDiscussions: async () => {
+    try{
+    return await Discussion.find().sort({ createdAt: -1 }).limit(10);
+    } catch (error){
+      console.error("Couldn't get recent posts:", error);
+    }
+  }
 };
 
 module.exports = DiscussionController;

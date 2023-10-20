@@ -4,10 +4,11 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 2rem; /* Adjust as needed */
+    background-color: #e6e6e6;
   }
   
   thead {
-    background-color: #f2f2f2; /* Light gray background for the header */
+    background-color: #ffffff; /* Light gray background for the header */
   }
   
   th, td {
@@ -19,6 +20,7 @@
   td div:hover {
     color: blue; /* Change to your desired color */
     cursor: pointer;
+    
   }
   
   tr:hover {

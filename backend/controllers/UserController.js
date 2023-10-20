@@ -173,6 +173,13 @@ const UserController = {
         console.error('Error fetching user profile:', error);
         res.status(500).json({ error: 'Error fetching user profile' });
       }
+    },
+    getRecentUsers: async () => {
+      try{
+      return await User.find().sort({ _id: -1 }).limit(5);
+      } catch (error){
+        console.error("Couldn't get recent users:", error);
+      }
     }
 
     

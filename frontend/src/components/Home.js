@@ -1,6 +1,6 @@
 // Home.js
 import React from 'react';
-import RecentPosts from './RecentPosts'; // Assuming you have a component for recent posts
+import RecentPosts from '../components/RecentPosts'; // Assuming you have a component for recent posts
 import NewestUsers from '../components/NewestUsers';
 import TopContributors from '../components/TopContributors';
 import PopularTopics from '../components/PopularTopics';
@@ -21,6 +21,7 @@ const Home = () => {
 
         <div className="recent-posts-section">
           <h2>Recent Posts</h2>
+          <RecentPosts />
           
         </div>
 
