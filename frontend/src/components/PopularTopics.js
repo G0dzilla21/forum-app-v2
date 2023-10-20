@@ -23,7 +23,7 @@ const PopularTopics = () => {
       <h3>Popular Topics</h3>
       <ul>
         {popularTopics.map((topic, index) => (
-          <li key={index}>{topic}</li>
+          <li key={index} style={{ marginBottom: '10px' }}>{topic}</li>
         ))}
       </ul>
     </div>

@@ -6,7 +6,7 @@
 .left-sidebar,
 .right-sidebar {
   width: 190px; /* Adjust the width as needed */
-  height: 100vh;
+  height:auto;
   background-color:rgb(20, 20, 20);
   padding: 1%;
   padding-top: 1%;
