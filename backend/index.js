@@ -41,6 +41,9 @@ app.get('/', (req, res) => {
 
 app.use('/api', express.Router().use(authRoutes, forumRoutes));
 
+// Export the Express app
+module.exports = app;
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
