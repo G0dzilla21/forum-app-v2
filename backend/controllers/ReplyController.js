@@ -1,5 +1,6 @@
 const Reply = require('../models/Reply');
 const mongoose = require('mongoose');
+const Discussion = require("../models/Discussion.js");
 
 const ReplyController = {
   
@@ -101,6 +102,18 @@ const ReplyController = {
       res.status(500).json({ error: 'Error in deleting reply' });
     }
   },
+  getPopularTopics: async () => {
+    const aggregated = await Reply.aggregate([
+      { $group: { _id: "$discussion", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 5 }
+    ]);
+
+    const discussionIds = aggregated.map(a => a._id);
+    const discussions = await Discussion.find({ '_id': { $in: discussionIds } });
+    
+    return discussions.map(d => d.title);
+  }
 };
 
 module.exports = ReplyController;
