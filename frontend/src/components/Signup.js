@@ -11,31 +11,32 @@ const Signup = () => {
       };
 
   return (
-
-    <div className="signup-container">
-      <h2>Signup</h2>
-      <form>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <button type="button" onClick={handleSignup}>
-          Signup
-        </button>
-      </form>
-    </div>
+    
+      <div className="signup-container">
+        <h2>Signup</h2>
+        <form>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <br />
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <br />
+          <button type="button" onClick={handleSignup}>
+            Signup
+          </button>
+        </form>
+      </div>
+    
   );
 };
 

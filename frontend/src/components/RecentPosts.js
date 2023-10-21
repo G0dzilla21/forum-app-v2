@@ -1,4 +1,3 @@
-// RecentPosts.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -9,8 +8,8 @@ const RecentPosts = () => {
     // Fetch recent posts from your API
     const fetchRecentPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/recent-posts');
-        setPosts(response.data);
+        const response = await axios.get('http://localhost:5000/api/dashboard-overview');
+        setPosts(response.data.recentDiscussions); 
       } catch (error) {
         console.error('Error fetching recent posts:', error.message);
       }
@@ -22,11 +21,19 @@ const RecentPosts = () => {
   return (
     <div>
       {posts.map(post => (
-        <div key={post.id} className="post">
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
-          {/* Add more details as needed */}
-        </div>
+        <section className="recent-post">
+          
+            <div key={post.id} className="post section">
+              <h3>{post.title}</h3>
+              <p>{post.content} </p>
+              
+              <div className="timestamp">
+                <p>CreatedAt:<br></br>{post.createdAt}</p>
+              </div>
+            </div>
+            
+          
+        </section>
       ))}
     </div>
   );

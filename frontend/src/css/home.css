@@ -5,29 +5,102 @@
 
 .left-sidebar,
 .right-sidebar {
-  width: 200px; /* Adjust the width as needed */
+  width: 190px; /* Adjust the width as needed */
+  height:auto;
+  background-color:rgb(20, 20, 20);
   padding: 1%;
   padding-top: 1%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  z-index: 0;
+  text-align: center;
+  -webkit-text-fill-color: #fff;
+  background-image: url("../../public/Grid.png");
+  background-size:contain
+}
+
+li::marker {
+  color: white;
 }
 
 .main-content {
   flex-grow: 1;
+  background-color: rgb(104, 104, 104);
+  
 }
 
+.section {
+  display: flex;
+  gap: 1rem;
+  max-width: 700px;
+}
+
+.section__item {
+  flex: 1;
+}
+
+.welcome-section {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.recent-posts-section {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+
+}
+
+.recent-post {
+  display: flex;
   
-  .welcome-section {
-    background-color: #f0f0f0;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-  }
+  margin-bottom: 20px;
+}
+
+.post {
+  flex: 1;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  text-align: Left;
+  max-width: 100%;
+}
+
+.post h3 {
+  margin-top: 0; /* Removes the top margin for a tighter layout */
+}
+
+.timestamp {
+  box-shadow: #000000;
+  text-align: center;
+  margin-left: auto;
+}
+h1 {
+  font-size: 40px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+h2 {
+  -webkit-text-fill-color: #000000;
+}
+h4 {
+  padding-left: 10%;
+}
   
-  .recent-posts-section {
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  /* Add more styling as needed */
+.login-modal {
+
+  z-index: 1;
+  -webkit-text-fill-color: #fff;
+
+}
+.modal-content {
+
+  background-color: rgb(7, 7, 7);
+}
+input {
+  background-color: rgb(15, 15, 15);
+}
   
