@@ -11,6 +11,7 @@ const Home = () => {
     <div className="home-container">
       <div className="left-sidebar">
         <NewestUsers />
+        <br></br>
         <TopContributors />
       </div>
 
