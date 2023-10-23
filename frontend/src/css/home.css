@@ -24,7 +24,7 @@ li::marker {
 
 .main-content {
   flex-grow: 1;
-  background-color: rgb(104, 104, 104);
+  background-color: rgb(69, 66, 66);
   
 }
 
@@ -39,7 +39,7 @@ li::marker {
 }
 
 .welcome-section {
-  background-color: #ffffff;
+  background-color: #6bff770c;
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 8px;

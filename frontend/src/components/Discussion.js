@@ -14,29 +14,51 @@ export const Discussion = () => {
   const category = queryParams.get("name");
   const [discussions, setDiscussions] = useState([]);
   const [editingDiscussion, setEditingDiscussion] = useState(null);
-  const isLoggedIn = sessionStorage.length > 0; // Check if the user is logged in
+  const isLoggedIn = sessionStorage.getItem("token"); // Check if the user is logged in
   const [sentDiscussion, setSentDiscussion] = useState(false);
   const userToken = sessionStorage.getItem("token");
-  const decodedToken = jwtDecode(userToken);
-  const userId = decodedToken.userId;
+  const decodedToken = userToken ? jwtDecode(userToken) : null;
+  const userId = decodedToken ? decodedToken.userId : null;
 
   const handleClick = (discussionId) => {
     navigate(`/forum/category/discussion?id=${discussionId}`);
   };
 
   const handleEdit = (discussion) => {
-    setEditingDiscussion(discussion);
+    // Check if the user is logged in and has a valid token
+    if (isLoggedIn && decodedToken) {
+      setEditingDiscussion(discussion);
+    } else {
+      // You can redirect to a login page or display an error message
+      alert("Please log in to edit discussions.");
+      // Example redirection:
+      // navigate('/login');
+    }
   };
-  const handleDelete = async (discussionId) => {
-    try {
-      await ForumApi.deleteDiscussion(discussionId);
 
-      // After successfully deleting the discussion, remove it from the state
-      setDiscussions((prevDiscussions) =>
-        prevDiscussions.filter((discussion) => discussion._id !== discussionId)
-      );
-    } catch (error) {
-      console.error("Error deleting discussion:", error);
+  const handleDelete = async (discussionId) => {
+    // Check if the user is logged in and has a valid token
+    if (isLoggedIn && decodedToken) {
+      // Ask for confirmation before deleting
+      const confirmation = window.confirm("Are you sure you want to delete this discussion?");
+      
+      if (confirmation) {
+        try {
+          await ForumApi.deleteDiscussion(discussionId);
+  
+          // After successfully deleting the discussion, remove it from the state
+          setDiscussions((prevDiscussions) =>
+            prevDiscussions.filter((discussion) => discussion._id !== discussionId)
+          );
+        } catch (error) {
+          console.error("Error deleting discussion:", error);
+        }
+      }
+    } else {
+      // You can redirect to a login page or display an error message
+      alert("Please log in to delete discussions.");
+      // Example redirection:
+      // navigate('/login');
     }
   };
 
@@ -115,15 +137,18 @@ export const Discussion = () => {
                     {/* Wrap the title content in a clickable element */}
                     <div>
                       <p>{discussion.title}</p>
-                      <div>
+                    </div>
+                    <div className="created-by">
                         <p>
-                          Created by: <span>{discussion.author?.username}</span>
+                          by 
+                          <span> {discussion.author?.username}</span>
                         </p>
-                      </div>
                     </div>
                   </td>
                   <td>{discussion.content}</td>
-                  <td>{discussion.createdAt}</td>
+                  <td>
+                    {discussion.createdAt}
+                  </td>
 
                   <td>
                     <button
@@ -135,6 +160,7 @@ export const Discussion = () => {
                     >
                       Edit
                     </button>
+                    <p></p>
                     <button
                       onClick={() => handleDelete(discussion._id)}
                       disabled={discussion.author?._id !== userId}

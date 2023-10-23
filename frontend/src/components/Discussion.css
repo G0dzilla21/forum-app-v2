@@ -12,3 +12,7 @@ button.disabled {
 .delete-post-button:hover {
   background-color: rgb(255, 0, 0, 0.7);
 }
+.created-by {
+  color: #4caf50;
+  
+}
