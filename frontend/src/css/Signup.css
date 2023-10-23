@@ -42,3 +42,8 @@ body{
   button:hover {
     background-color: #45a049;
   }
+
+  .signup-text {
+    margin-bottom: 20px;
+    color: #ffffff;
+  }

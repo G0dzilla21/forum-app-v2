@@ -1,22 +1,36 @@
 h1{
   text-align: center;
   padding-top: 1rem;
+  color: #45a049;
+  font-family:monospace;
+}
+
+.forum-header-container{
+  background-color: rgba(243, 245, 247, 0);
+  padding: 1rem 1rem;
+  align-items: center;
+  border-radius: 2rem;
+  justify-content: space-between;
 }
 
 .container{
   padding: 3rem 2rem;
+  background-image: url("../../../public/Grid.png");
+  background-color:rgb(20, 20, 20);
 }
 
 .forum-container{
-  display: flex;
+  display:contents;
   justify-content: center;
   align-items: center;
+  background-color: rgba(243, 245, 247, 0.59);
 }
 
 .accordion{
-  background-color: rgb(243,245,247);
+  background-color: rgba(243, 245, 247, 0.59);
   padding: 3rem;
   border-radius: 2rem;
+  
 }
 
 .accordion-header{
@@ -37,7 +51,7 @@ h1{
 .accordion-item{
   border-top: 1px solid #959595;
   border-bottom: 1px solid #959595;
-  background-color: rgb(243,245,247);
+  background-color: rgba(243, 245, 247, 0.221);
   overflow: hidden;
   padding: 0 3rem;
 
@@ -66,6 +80,7 @@ h1{
 .loading-container {
   display: flex;
   justify-content: center;
+  
 }
 
 

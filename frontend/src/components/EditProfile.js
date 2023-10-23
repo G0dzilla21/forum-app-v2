@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserApi from '../api/UserApi';
 import defaultAvatar from '../assets/default-avatar.jpg';
+import '../css/EditProfile.css';
 
 const avatarImages = [
   'avatar1.jpg',
@@ -103,7 +104,7 @@ const EditProfile = () => {
 
 
   return (
-    <div>
+    <div className="edit-profile-container">
       <h2>Edit Profile</h2>
       {userData.avatar ? (
         <div>

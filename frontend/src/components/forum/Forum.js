@@ -71,7 +71,10 @@ export const Forum = () => {
 
     return (
         <div className="container">
-            <h1 className='py-4'>Main Forum Page</h1>
+            <div className='forum-header-container'>
+                <h1 className='py-4'> Main Forum </h1>
+            </div>
+            <p></p>
             {isLoading ? (
                 <div className="loading-container">
                   <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

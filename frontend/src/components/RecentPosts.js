@@ -21,19 +21,19 @@ const RecentPosts = () => {
   return (
     <div>
       {posts.map(post => (
-        <section className="recent-post">
-          
-            <div key={post.id} className="post section">
-              <h3>{post.title}</h3>
-              <p>{post.content} </p>
-              
-              <div className="timestamp">
-                <p>CreatedAt:<br></br>{post.createdAt}</p>
-              </div>
-            </div>
+        <section className="recent-post" key={post.id}>
+        <div className="post section">
+          <div className="post-header">
+            <p></p>
+            <h3 className="post-title">{post.title}</h3>
             
-          
-        </section>
+          </div>
+          <p className="post-content">{post.content}</p>
+          <div className="timestamp">
+              <p>Created at:<br />{post.createdAt}</p>
+            </div>
+        </div>
+      </section>
       ))}
     </div>
   );

@@ -42,6 +42,7 @@ li::marker {
   background-color: #ffffff;
   padding: 20px;
   margin-bottom: 10px;
+  border-radius: 8px;
 }
 
 .recent-posts-section {
@@ -50,13 +51,18 @@ li::marker {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   text-align: center;
-
+  border: rgb(0, 0, 0);
 }
 
 .recent-post {
   display: flex;
-  
+  border: rgb(0, 0, 0);
   margin-bottom: 20px;
+}
+.widget {
+  padding: 5px;
+  border-radius: 8px;
+  background-color:rgba(240, 255, 255, 0.276);
 }
 
 .post {
@@ -67,10 +73,21 @@ li::marker {
   border-radius: 8px;
   text-align: Left;
   max-width: 100%;
+  border: rgb(0, 0, 0);
 }
+
+.post-title {
+  width: 200px; /* Set a fixed width for the title */
+}
+
+.post-content {
+  width: 600px; /* Set a fixed width for the content */
+}
+
 
 .post h3 {
   margin-top: 0; /* Removes the top margin for a tighter layout */
+  
 }
 
 .timestamp {

@@ -16,7 +16,7 @@ const Home = () => {
 
       <div className="main-content">
         <div className="welcome-section">
-          <h1>Welcome to Our Forum!</h1>
+          <h1>Welcome to the Forum!</h1>
         </div>
 
         <div className="recent-posts-section">

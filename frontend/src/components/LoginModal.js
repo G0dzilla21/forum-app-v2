@@ -16,7 +16,9 @@ const LoginModal = ({ onClose, setIsLoggedIn }) => {
     <div className="login-modal">
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
-        <h2>Login</h2>
+        <h1 className='login-text' style={{ color: 'white' }}>Login</h1>
+        <br></br>
+        <br></br>
         <label>Username:</label>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         <br />
