@@ -20,6 +20,11 @@ const Signup = () => {
   return (
     <div className="signup-container">
       <h1 className='signup-text' style={{ color: 'white' }}>Signup</h1>
+      <p>
+        Please enter a username and password to create an account.
+      </p>
+      <br></br>
+      <br></br>
       <form>
         <label htmlFor="username">Username:</label>
         <input

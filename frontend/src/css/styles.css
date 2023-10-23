@@ -63,7 +63,7 @@
   background-color: #fefefe;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 400px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -93,7 +93,7 @@ label {
 }
 
 input {
-  width: 100%;
+  width: 300px;
   padding: 8px;
   margin-bottom: 16px;
   border: 1px solid #ddd;
